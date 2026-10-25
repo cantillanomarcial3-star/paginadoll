@@ -1,0 +1,224 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Un pequeño detalle para ti</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #d991a6, #e9b1bf, #f2d5dc);
+        }
+
+        .tarjeta {
+            width: 100%;
+            max-width: 550px;
+            padding: 30px 22px;
+            text-align: center;
+            background: #fffafc;
+            border-radius: 22px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            color: #bd5275;
+        }
+
+        p {
+            color: #59424a;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        .pregunta {
+            margin-top: 25px;
+            font-size: 21px;
+            font-weight: bold;
+            color: #bd5275;
+        }
+
+        .botones {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 25px;
+            min-height: 55px;
+        }
+
+        button {
+            border: none;
+            border-radius: 12px;
+            padding: 13px 28px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #si {
+            background: #d65d83;
+            color: white;
+        }
+
+        #no {
+            background: #777;
+            color: white;
+            touch-action: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        #sorpresa {
+            display: none;
+            margin-top: 25px;
+            padding: 18px;
+            background: #fce6ed;
+            border-radius: 15px;
+            color: #a53d62;
+        }
+
+        #sorpresa p {
+            color: #71374b;
+        }
+
+        @media (max-width: 500px) {
+            .tarjeta {
+                padding: 25px 17px;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+            p {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="tarjeta">
+        <h1>Un pequeño detalle para ti </h1>
+
+        <p>
+            Primero que nada, quería pedirte perdón.
+            Sé que no soy perfecto y que tengo mis errores.
+            Acepto que muchas veces me confundí y no supe
+            cómo reaccionar al conocerte.
+        </p>
+
+        <p>
+            Nunca fue mi intención hacerte pasar malos momentos.
+            Quiero que sepas que también hay cosas bonitas
+            que me gustaría compartir contigo.
+        </p>
+
+        <p>
+            A veces una segunda oportunidad puede convertirse
+            en algo muy bonito. No quiero presionarte,
+            solo quería expresar lo que siento. 🌷
+        </p>
+
+        <p class="pregunta">
+            ¿Te gustaría volver a intentarlo? 
+        </p>
+
+        <div class="botones">
+            <button id="si" type="button">Sí</button>
+            <button id="no" type="button">No</button>
+        </div>
+
+        <section id="sorpresa">
+            <h2>¡Sabía que querías leer esto! </h2>
+            <p>
+                Gracias por darme la oportunidad.
+                No te prometo ser perfecto, pero sí intentar
+                hacer las cosas mejor, conocerte más y crear
+                momentos bonitos contigo. ✨
+            </p>
+            <p>Espero sacarte muchas sonrisas. 🌹</p>
+        </section>
+
+        <p>Diseñado con cariño por Mxrcixl 💌</p>
+    </main>
+
+    <script>
+        const botonSi = document.getElementById("si");
+        const botonNo = document.getElementById("no");
+        const sorpresa = document.getElementById("sorpresa");
+
+        // Mostrar el mensaje cuando se pulsa SI
+        botonSi.addEventListener("click", function () {
+            sorpresa.style.display = "block";
+            botonSi.textContent = "¡Sí! 💖";
+
+            // Desplazarse hasta el mensaje para que sea visible
+            sorpresa.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        });
+
+        // Mover el botón NO a otra posición
+        function moverBoton() {
+            const margen = 15;
+            const ancho = botonNo.offsetWidth;
+            const alto = botonNo.offsetHeight;
+
+            const maxX = Math.max(
+                margen,
+                window.innerWidth - ancho - margen
+            );
+
+            const maxY = Math.max(
+                margen,
+                window.innerHeight - alto - margen
+            );
+
+            const x = margen + Math.random() * (maxX - margen);
+            const y = margen + Math.random() * (maxY - margen);
+
+            botonNo.style.position = "fixed";
+            botonNo.style.left = x + "px";
+            botonNo.style.top = y + "px";
+            botonNo.style.zIndex = "9999";
+        }
+
+        // Computadora: se mueve al acercar el mouse
+        botonNo.addEventListener("mouseenter", moverBoton);
+
+        // Teléfono: se mueve al tocarlo
+        botonNo.addEventListener("touchstart", function (evento) {
+            evento.preventDefault();
+            moverBoton();
+        }, { passive: false });
+
+        // Respaldo para dispositivos con otros tipos de puntero
+        botonNo.addEventListener("pointerdown", function (evento) {
+            if (evento.pointerType !== "touch") {
+                moverBoton();
+            }
+        });
+
+        // Evitar que el botón NO realice una acción
+        botonNo.addEventListener("click", function (evento) {
+            evento.preventDefault();
+            moverBoton();
+        });
+    </script>
+</body>
+</html>
